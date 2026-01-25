@@ -18,5 +18,7 @@ services:
       dockerfile: Dockerfile.streamlit
     ports:
       - "8501:8501"
+    environment:
+      - API_URL=http://api:8000
     depends_on:
       - api

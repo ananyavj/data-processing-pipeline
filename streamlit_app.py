@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import os
 
 
 # Configure page
@@ -13,8 +14,8 @@ if "current_source" not in st.session_state:
 
 st.title("🔍 Mini Telemetry Pipeline Search")
 
-# API endpoint
-API_URL = "http://api:8000"
+# API endpoint - configurable for both Docker and local development
+API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 
 # File Upload Section

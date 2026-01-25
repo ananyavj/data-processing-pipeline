@@ -158,6 +158,74 @@ docker compose down
 
 ---
 
+## Running Locally (Without Docker)
+
+For faster development iteration or recruiter testing, you can run the pipeline locally without Docker.
+
+### Prerequisites
+
+- Python 3.8+
+- pip
+
+### Option 1: Quick Start (Recommended)
+
+**Windows:**
+```powershell
+.\run_local.ps1
+```
+
+**Mac/Linux:**
+```bash
+chmod +x run_local.sh
+./run_local.sh
+```
+
+This automatically:
+1. Creates a virtual environment
+2. Installs dependencies
+3. Starts both API and Streamlit
+
+### Option 2: Manual Setup
+
+1. **Create and activate virtual environment:**
+
+```bash
+# Windows
+python -m venv .venv
+.\.venv\Scripts\activate
+
+# Mac/Linux
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+2. **Install dependencies:**
+
+```bash
+pip install -r requirements.txt
+```
+
+3. **Start API server** (in one terminal):
+
+```bash
+uvicorn src.api:app --reload
+```
+
+4. **Start Streamlit UI** (in another terminal):
+
+```bash
+streamlit run streamlit_app.py
+```
+
+### Access Points
+
+- **API**: http://localhost:8000
+- **UI**: http://localhost:8501
+- **API Docs**: http://localhost:8000/docs
+
+---
+
+
 ## API Usage
 
 ### 1. Health Check
@@ -272,4 +340,3 @@ curl "http://localhost:8000/summary"
 | **Structured Logging** | Use structured JSON logs for observability |
 | **Metrics**         | Prometheus metrics (search latency, requests/sec) |
 
----
