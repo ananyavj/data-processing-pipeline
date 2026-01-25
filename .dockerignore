@@ -1,0 +1,8 @@
+__pycache__
+.git
+venv
+.venv
+models
+data
+*.pkl
+*.faiss
