@@ -273,21 +273,3 @@ curl "http://localhost:8000/summary"
 | **Metrics**         | Prometheus metrics (search latency, requests/sec) |
 
 ---
-
-## Resume Description
-
-**Log Intelligence Pipeline with Semantic Search**
-
-- Built end-to-end log processing pipeline with cleaning, PII masking, and semantic embedding using sentence-transformers
-- Implemented FAISS-based vector search for similarity retrieval (384-dim embeddings)
-- Developed FastAPI REST service with search, ingestion, and filtering endpoints
-- Created Streamlit UI for interactive log querying
-- Containerized backend and frontend using Docker Compose for environment-independent deployment
-- Designed modular microservice architecture with persistent storage and multi-source tagging
-- Automated ETL workflow: ingestion → cleaning → PII masking → embedding → indexing
-
----
-
-## License
-
-MIT
