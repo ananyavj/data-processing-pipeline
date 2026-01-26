@@ -141,6 +141,35 @@ if st.sidebar.button("Refresh Stats"):
     except Exception as e:
         st.sidebar.error(f"Error: {str(e)}")
 
+# Clear all data button
+st.sidebar.markdown("---")
+st.sidebar.header("⚠️ Reset Data")
+
+if st.sidebar.button("🗑️ Clear All Data", type="primary", help="Delete all saved logs and FAISS index from disk"):
+    try:
+        with st.spinner("Clearing all saved data..."):
+            response = requests.delete(f"{API_URL}/clear-all")
+        
+        if response.status_code == 200:
+            result = response.json()
+            st.sidebar.success("✅ All data cleared!")
+            st.sidebar.write(f"**Deleted files:**")
+            for file in result.get("deleted_files", []):
+                st.sidebar.write(f"- {file}")
+            
+            # Reset session state
+            st.session_state.file_indexed = False
+            st.session_state.current_source = ""
+            
+            st.sidebar.info("💡 Upload a new file to start fresh")
+        else:
+            st.sidebar.error(f"❌ Failed to clear data: {response.status_code}")
+    
+    except requests.exceptions.ConnectionError:
+        st.sidebar.error("❌ Cannot connect to API")
+    except Exception as e:
+        st.sidebar.error(f"❌ Error: {str(e)}")
+
 
 # Instructions
 st.sidebar.markdown("---")

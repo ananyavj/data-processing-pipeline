@@ -290,6 +290,50 @@ def ingest(new_logs: list = Body(...), source: str = Query("unknown")):
     }
 
 
+@app.delete("/clear-all")
+def clear_all():
+    """
+    Delete all saved data from disk and clear memory.
+    This removes:
+    - Saved logs (models/logs.pkl)
+    - FAISS index (models/faiss.index)
+    - In-memory logs
+    And reinitializes with an empty index.
+    """
+    global logs, indexer
+    
+    # List of files to delete
+    files_to_delete = [
+        "models/logs.pkl",
+        "models/faiss.index"
+    ]
+    
+    deleted_files = []
+    
+    # Delete each file if it exists
+    for file_path in files_to_delete:
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+                deleted_files.append(file_path)
+                print(f"Deleted {file_path}")
+            except Exception as e:
+                print(f"Error deleting {file_path}: {str(e)}")
+    
+    # Clear in-memory logs
+    logs = []
+    
+    # Reinitialize FAISS index with empty embeddings
+    import faiss
+    indexer = LogIndexer(embeddings=np.zeros((0, 384)), index_path="models/faiss.index")
+    
+    return {
+        "message": "All saved data cleared successfully",
+        "deleted_files": deleted_files,
+        "total_logs": len(logs)
+    }
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
