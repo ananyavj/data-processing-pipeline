@@ -1,4 +1,4 @@
-# Databahn Mini Pipeline
+# Data Processing Mini Pipeline
 
 End-to-end log intelligence system with semantic search, PII masking, and REST API.
 
